@@ -1,0 +1,14 @@
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\bin\Debug\net8.0\DomainLayer.deps.json
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\bin\Debug\net8.0\DomainLayer.runtimeconfig.json
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\bin\Debug\net8.0\DomainLayer.dll
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\bin\Debug\net8.0\DomainLayer.pdb
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.AssemblyInfoInputs.cache
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.AssemblyInfo.cs
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.csproj.CoreCompileInputs.cache
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.sourcelink.json
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.dll
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\refint\DomainLayer.dll
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.pdb
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.genruntimeconfig.cache
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\ref\DomainLayer.dll
