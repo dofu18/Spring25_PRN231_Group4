@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\tutoring_kid_platform.props" />
-</Project>
