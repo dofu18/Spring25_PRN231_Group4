@@ -8,10 +8,22 @@
     ".NETCoreApp,Version=v8.0": {
       "DomainLayer/1.0.0": {
         "dependencies": {
+          "AutoWrapper.Core": "4.5.1",
           "Microsoft.EntityFrameworkCore.Design": "9.0.1"
         },
         "runtime": {
           "DomainLayer.dll": {}
+        }
+      },
+      "AutoWrapper.Core/4.5.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/net6.0/AutoWrapper.dll": {
+            "assemblyVersion": "4.5.1.0",
+            "fileVersion": "4.5.1.0"
+          }
         }
       },
       "Humanizer.Core/2.14.1": {
@@ -502,6 +514,14 @@
           }
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.3.27908"
+          }
+        }
+      },
       "System.CodeDom/6.0.0": {
         "runtime": {
           "lib/net6.0/System.CodeDom.dll": {
@@ -629,6 +649,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AutoWrapper.Core/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-voHfDZSDqBdSTwJHHSLhZu61opz/5OEKqn+P+0DEa0hdOOo8FfFWXSnZQYKMjwWurKR0f5hD/InPN2h828rMag==",
+      "path": "autowrapper.core/4.5.1",
+      "hashPath": "autowrapper.core.4.5.1.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",
@@ -811,6 +838,13 @@
       "sha512": "sha512-YqueG52R/Xej4VVbKuRIodjiAhV0HR/XVbLbNrJhCZnzjnSjgMJ/dCdV0akQQxavX6hp/LC6rqLGLcXeQYU7XA==",
       "path": "mono.texttemplating/3.0.0",
       "hashPath": "mono.texttemplating.3.0.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "path": "newtonsoft.json/13.0.3",
+      "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
     },
     "System.CodeDom/6.0.0": {
       "type": "package",

@@ -12,3 +12,4 @@ D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net
 D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.pdb
 D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.genruntimeconfig.cache
 D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\ref\DomainLayer.dll
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\DomainLayer\obj\Debug\net8.0\DomainLayer.csproj.AssemblyReference.cache

@@ -168,3 +168,6 @@ D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\Controller\obj\Debug\net8
 D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\Controller\obj\Debug\net8.0\Controller.pdb
 D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\Controller\obj\Debug\net8.0\Controller.genruntimeconfig.cache
 D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\Controller\obj\Debug\net8.0\ref\Controller.dll
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\Controller\bin\Debug\net8.0\AutoMapper.dll
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\Controller\bin\Debug\net8.0\AutoWrapper.dll
+D:\FPT_University\Term_8\PRN231\Spring25_PRN231_Group4\Controller\bin\Debug\net8.0\Newtonsoft.Json.dll
