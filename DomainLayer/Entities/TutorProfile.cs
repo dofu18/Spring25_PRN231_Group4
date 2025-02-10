@@ -15,7 +15,7 @@ namespace DomainLayer.Entities
         public string Meta { get; set; } = string.Empty;
 
         // Navigation Property
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 
 }

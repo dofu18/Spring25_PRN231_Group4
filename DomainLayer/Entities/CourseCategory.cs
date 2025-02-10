@@ -12,8 +12,8 @@ namespace DomainLayer.Entities
         public Guid CategoryId { get; set; }
 
         // Navigation Properties
-        public virtual Course Course { get; set; }
-        public virtual Category Category { get; set; }
+        public Course Course { get; set; }
+        public Category Category { get; set; }
     }
 
 }

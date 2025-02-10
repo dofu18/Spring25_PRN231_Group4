@@ -14,8 +14,8 @@ namespace DomainLayer.Entities
         public float Price { get; set; }
 
         // Navigation Properties
-        public virtual Course Course { get; set; }
-        public virtual Order Order { get; set; }
+        public Course Course { get; set; }
+        public Order Order { get; set; }
     }
 
 }

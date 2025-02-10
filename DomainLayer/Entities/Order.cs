@@ -13,8 +13,7 @@ namespace DomainLayer.Entities
         public string PaymentMethod { get; set; } = string.Empty;
 
         // Navigation Property
-        public virtual User CreatedUser { get; set; } 
-        public virtual ICollection<OrderCourse> OrderCourses { get; set; } = new List<OrderCourse>();
+        public User CreatedUser { get; set; } 
     }
 
 }

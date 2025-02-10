@@ -21,11 +21,5 @@ namespace DomainLayer.Entities
 
         // Navigation Properties
         public virtual User? Parent { get; set; }
-        public virtual ICollection<TutorProfile> TutorProfiles { get; set; } = new List<TutorProfile>();
-        public virtual ICollection<TransactionHistory> Transactions { get; set; } = new List<TransactionHistory>();
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-        public virtual ICollection<BoughtCourse> BoughtCourses { get; set; } = new List<BoughtCourse>();
-        public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
-        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

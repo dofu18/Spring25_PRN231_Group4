@@ -15,8 +15,8 @@ namespace DomainLayer.Entities
         public bool Active { get; set; }
 
         // Navigation Properties
-        public virtual Course Course { get; set; }
-        public virtual User CreatedByUser { get; set; }
+        public Course Course { get; set; }
+        public User CreatedByUser { get; set; }
     }
 
 }

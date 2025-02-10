@@ -21,6 +21,8 @@ namespace InfrastructureLayer
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
+            Console.WriteLine($"Using ConnectionString: {configuration.GetConnectionString("DefaultConnection")}");
+
             var connectionString = configuration.GetConnectionString("DefaultConnection"); // 🔥 Ensure correct key!
 
             var optionsBuilder = new DbContextOptionsBuilder<TutoringKidDbContext>();

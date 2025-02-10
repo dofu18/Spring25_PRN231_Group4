@@ -17,7 +17,6 @@ namespace DomainLayer.Enums
             Failed,
             Successfully
         }
-
         public enum IdType
         {
             [Description("Id")]
@@ -26,6 +25,40 @@ namespace DomainLayer.Enums
             UserId = 2,
             [Description("Order Id")]
             OrderId = 3
+        }
+        public enum UserStatusEnum
+        {
+            NotVerified,
+            Active,
+            Disabled,
+            // status = 0: Inactive, 1: Active, 2: Disabled
+        }
+        public enum UserRoleEnum
+        {
+            Admin,
+            Staff,
+            Parent,
+            Tutor,
+            Kid,
+        }
+        public enum TutorProfileEnum
+        {
+            Draft,
+            Pending,
+            Publish,
+            Disable,
+        }
+        public enum ScheduleStatusEnum
+        {
+            Active,
+            InActive,
+        }
+        public enum CourseStatusEnum
+        {
+            Draft,
+            Pending,
+            Publish,
+            Disable,
         }
     }
 }

@@ -14,8 +14,7 @@ namespace DomainLayer.Entities
         public bool Active { get; set; }
 
         // Navigation Properties
-        public virtual User CreatedByUser { get; set; }
-        public virtual ICollection<CourseCategory> CourseCategories { get; set; } = new List<CourseCategory>();
+        public User CreatedByUser { get; set; }
     }
 
 }

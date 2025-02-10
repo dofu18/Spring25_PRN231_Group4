@@ -19,9 +19,7 @@ namespace DomainLayer.Entities
         public float AvgRating { get; set; }
 
         // Navigation Properties
-        public virtual User Tutor { get; set; }
-        public virtual ICollection<CourseCategory> CourseCategories { get; set; } = new List<CourseCategory>();
-        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public User Tutor { get; set; }
     }
 
 }
