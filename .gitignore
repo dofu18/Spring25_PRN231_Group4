@@ -1,1 +1,15 @@
-.vs/ 
+[Bb]in/
+
+[Oo]bj/
+
+./appsettings.Development.json
+
+.vs/
+
+appsettings.json
+
+Exe.csproj.user
+
+*.sln
+
+*.env
