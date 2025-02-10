@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.RespType;
 using ApplicationLayer.DTOs;
 using AutoMapper;
 using DomainLayer.Constants;
@@ -12,6 +13,7 @@ using DomainLayer.Exceptions;
 using InfrastructureLayer;
 using InfrastructureLayer.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using static DomainLayer.Enums.GeneralEnum;
 
 namespace ApplicationLayer.Services.Orders
@@ -25,7 +27,7 @@ namespace ApplicationLayer.Services.Orders
             _orderRepo = orderRepo;
         }
 
-        public async Task Create(OrderCreateDto dto)
+        public async Task<IActionResult> Create(OrderCreateDto dto)
         {
             var order = _mapper.Map<Order>(dto);
             order.CreatedBy = new Guid("11111111-1111-1111-1111-111111111111");
@@ -33,6 +35,8 @@ namespace ApplicationLayer.Services.Orders
             order.UpdatedAt = DateTime.Now;
             order.UpdatedBy = new Guid("11111111-1111-1111-1111-111111111111");
             await _orderRepo.CreateAsync(order);
+
+            return SuccessResp.Created("Order created successfully");
         }
 
         public async Task<ICollection<Order>> List(Guid? userId = null)

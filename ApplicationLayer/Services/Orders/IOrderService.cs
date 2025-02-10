@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ApplicationLayer.DTOs;
 using DomainLayer.Entities;
 using DomainLayer.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationLayer.Services.Orders
 {
@@ -13,7 +14,7 @@ namespace ApplicationLayer.Services.Orders
     {
         Task<ICollection<Order>> List(Guid? userId = null);
         Task<ICollection<Order>> SearchById(Guid id, GeneralEnum.IdType idtype);
-        Task Create(OrderCreateDto order);
+        Task<IActionResult> Create(OrderCreateDto order);
         
     }
 }
