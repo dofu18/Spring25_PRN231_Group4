@@ -1,6 +1,6 @@
-[Bb]in/
+**/bin/
 
-[Oo]bj/
+**/obj/
 
 ./appsettings.Development.json
 
@@ -14,14 +14,15 @@ tutoring_kid_solution.csproj.user
 
 *.env
 
-*/ApplicationLayer.csproj
+./ApplicationLayer.csproj
 
-*/ApplicationLayer/obj
-*/ApplicationLayer/bin
-*/Controller/bin
-*/Controller/obj
-*/DomainLayer/obj
-*/DomainLayer/bin
-*/InfrastructureLayer/bin
-*/InfrastructureLayer/obj
-*/tutoring_kid_solution/RazorPage_FE/obj
+./ApplicationLayer/obj
+./ApplicationLayer/bin
+./Controller/bin
+./Controller/obj
+./DomainLayer/obj
+./DomainLayer/bin
+./InfrastructureLayer/bin
+./InfrastructureLayer/obj
+./tutoring_kid_solution/RazorPage_FE/obj
+./tutoring_kid_solution/RazorPage_FE/obj
