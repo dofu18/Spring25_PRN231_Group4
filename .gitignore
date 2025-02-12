@@ -8,8 +8,20 @@
 
 appsettings.json
 
-Exe.csproj.user
+tutoring_kid_solution.csproj.user
 
 *.sln
 
 *.env
+
+*/ApplicationLayer.csproj
+
+*/ApplicationLayer/obj
+*/ApplicationLayer/bin
+*/Controller/bin
+*/Controller/obj
+*/DomainLayer/obj
+*/DomainLayer/bin
+*/InfrastructureLayer/bin
+*/InfrastructureLayer/obj
+*/tutoring_kid_solution/RazorPage_FE/obj
