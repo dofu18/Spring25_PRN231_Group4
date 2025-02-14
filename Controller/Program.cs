@@ -1,3 +1,4 @@
+using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
 using InfrastructureLayer;
 using InfrastructureLayer.Repository;
@@ -17,10 +18,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Get Connection String from appsettings.json
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); ///
 
 // Add DbContext with PostGreSQL
-builder.Services.AddDbContext<TutoringKidDbContext>(options =>
+builder.Services.AddDbContext<TutoringKidDbContext>(options => ///
     options.UseNpgsql(connectionString));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -42,6 +43,7 @@ builder.Services.AddCors(options =>
 //Services
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
 
 var app = builder.Build();
 

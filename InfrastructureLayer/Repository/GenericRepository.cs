@@ -12,7 +12,7 @@ namespace InfrastructureLayer.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        protected TutoringKidDbContext _context;
+        protected readonly TutoringKidDbContext _context;
         protected DbSet<T> dbSet;
         public GenericRepository(TutoringKidDbContext context)
         {
