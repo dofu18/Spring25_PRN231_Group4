@@ -1,15 +1,16 @@
+# Build results
 [Bb]in/
-
 [Oo]bj/
 
-./appsettings.Development.json
-
+# Visual Studio files
 .vs/
 
+# Settings files
+appsettings.Development.json
 appsettings.json
 
-Exe.csproj.user
+# User-specific files
+*.user
 
-*.sln
-
+# Environment files
 *.env
