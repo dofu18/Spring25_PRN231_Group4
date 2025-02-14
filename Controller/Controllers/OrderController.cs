@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Controller.Controllers
 {
     [Route(Constants.Http.API_VERSION + "/Order")]
-    public class OrderController
+    public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
         private ILogger<OrderController> _logger;
