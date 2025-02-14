@@ -16,6 +16,19 @@ namespace InfrastructureLayer
             _configuration = configuration;
         }
 
+        //public static string GetConnectionString(string connectionStringName)
+        //{
+        //    var config = new ConfigurationBuilder()
+        //        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+        //        .AddJsonFile("appsettings.json")
+        //        .Build();
+
+        //    string connectionString = config.GetConnectionString(connectionStringName);
+        //    return connectionString;
+        //}
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //    => optionsBuilder.UseNpgsql(GetConnectionString("DefaultConnection"));
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var entries = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
@@ -169,6 +182,25 @@ namespace InfrastructureLayer
                 e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
                 e.HasOne(x => x.Child).WithMany().HasForeignKey(x => x.ChildId).OnDelete(DeleteBehavior.Cascade);
             });
+        }
+
+        public static string GetConnectionString(string connectionStringName)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            string connectionString = config.GetConnectionString(connectionStringName);
+            return connectionString;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(GetConnectionString("DefaultConnection"));
+            }
         }
     }
 }

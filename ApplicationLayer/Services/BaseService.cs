@@ -12,13 +12,11 @@ namespace ApplicationLayer.Services
 {
     public abstract class BaseService
     {
-        protected readonly TutoringKidDbContext _dbContext;
         protected readonly IMapper _mapper;
         protected readonly IHttpContextAccessor _httpCtx;
 
-        public BaseService(TutoringKidDbContext dbContext, IMapper mapper, IHttpContextAccessor httpCtx)
+        public BaseService(IMapper mapper, IHttpContextAccessor httpCtx)
         {
-            _dbContext = dbContext;
             _mapper = mapper;
             _httpCtx = httpCtx;
         }

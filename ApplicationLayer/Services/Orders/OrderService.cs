@@ -22,7 +22,7 @@ namespace ApplicationLayer.Services.Orders
     {
         private readonly IGenericRepository<Order> _orderRepo;
 
-        public OrderService(TutoringKidDbContext dbContext, IGenericRepository<Order> orderRepo, IMapper mapper, IHttpContextAccessor httpCtx) : base(dbContext, mapper, httpCtx)
+        public OrderService(IGenericRepository<Order> orderRepo, IMapper mapper, IHttpContextAccessor httpCtx) : base(mapper, httpCtx)
         {
             _orderRepo = orderRepo;
         }
