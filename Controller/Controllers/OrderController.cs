@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.DTOs;
+﻿using ApplicationLayer.DTOs.Orders;
 using ApplicationLayer.Services.Orders;
 using DomainLayer.Constants;
 using Microsoft.AspNetCore.Mvc;
