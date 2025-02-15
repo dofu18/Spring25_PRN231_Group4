@@ -18,6 +18,10 @@ namespace DomainLayer.Entities
         public Guid? ParentId { get; set; }
         public string Status { get; set; } = string.Empty;
         public DateTime LastLogin { get; set; }
+        public string? Token { get; set; }
+        public DateTime? TokenExpires { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpires { get; set; }
 
         // Navigation Properties
         public virtual User? Parent { get; set; }
