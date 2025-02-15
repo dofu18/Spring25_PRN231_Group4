@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DomainLayer.Entities;
-using InfrastructureLayer.Repository;
+using InfrastructureLayer.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 
 namespace ApplicationLayer.Services.OrderCourses

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DomainLayer.Entities;
 
-namespace ApplicationLayer.DTOs
+namespace ApplicationLayer.DTOs.Orders
 {
     public class OrderCreateDto
     {
