@@ -78,6 +78,11 @@ namespace InfrastructureLayer
                 u.Property(x => x.Status).IsRequired().HasDefaultValue(UserStatusEnum.NotVerified);
                 u.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
                 u.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                u.Property(x => x.Token).IsRequired(false).HasMaxLength(1000);
+                u.Property(x => x.TokenExpires).IsRequired(false).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                u.Property(x => x.RefreshToken).IsRequired(false).HasMaxLength(1000);
+                u.Property(x => x.RefreshTokenExpires).IsRequired(false).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
 
 
             });
