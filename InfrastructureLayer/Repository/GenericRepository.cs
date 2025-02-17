@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DomainLayer.Entities;
 using DomainLayer.Exceptions;
+using InfrastructureLayer.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.Repository

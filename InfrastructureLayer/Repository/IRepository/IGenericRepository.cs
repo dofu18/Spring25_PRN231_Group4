@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using DomainLayer.Constants;
 
-namespace InfrastructureLayer.Repository
+namespace InfrastructureLayer.Repository.IRepository
 {
     public interface IGenericRepository<T>
     {
