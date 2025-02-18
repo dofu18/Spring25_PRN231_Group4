@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.DTOs.Orders;
+﻿using ApplicationLayer.DTOs.Course;
+using ApplicationLayer.DTOs.Orders;
 using ApplicationLayer.DTOs.TutorProfile;
 using AutoMapper;
 using DomainLayer.Entities;
@@ -16,6 +17,7 @@ namespace DomainLayer.Mapper
         {
             CreateMap<TutorProfile, TutorProfileDto>().ReverseMap();
             CreateMap<Order, OrderCreateDto>().ReverseMap();
+            CreateMap<Course, CourseDto>().ReverseMap();
         }
     }
 }
