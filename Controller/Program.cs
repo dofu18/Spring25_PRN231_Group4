@@ -1,5 +1,7 @@
+using ApplicationLayer.Services.Auth;
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
+using DomainLayer.Helper;
 using InfrastructureLayer;
 using InfrastructureLayer.Repository;
 using InfrastructureLayer.Repository.IRepository;
@@ -28,6 +30,19 @@ builder.Services.AddSwaggerGen(option =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+       {
+          new OpenApiSecurityScheme
+          {
+             Reference = new OpenApiReference
+             {
+                Type = ReferenceType.SecurityScheme,
+                Id = JwtBearerDefaults.AuthenticationScheme
+             }
+          }, new string[] { }
+       }
+    });
 });
 
 // Configure CORS
@@ -54,23 +69,29 @@ builder.Services.AddDbContext<TutoringKidDbContext>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Register Services
+builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ITutorProfileRepository, TutorProfileRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline. 
+app.UseCors("AllowSpecificOrigin");
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    if (!app.Environment.IsDevelopment())
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "User API");
+        c.RoutePrefix = string.Empty;
+    }
+});
 
 app.UseHttpsRedirection();
-app.UseCors(CORS); // Add CORS middleware
 app.UseAuthorization();
 app.MapControllers();
 

@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.DTOs.Orders;
+﻿using ApplicationLayer.DTOs.Auth;
+using ApplicationLayer.DTOs.Orders;
 using ApplicationLayer.DTOs.TutorProfile;
 using AutoMapper;
 using DomainLayer.Entities;
@@ -14,6 +15,10 @@ namespace DomainLayer.Mapper
     {
         public MappingProfile()
         {
+            CreateMap<RegisterDto, User>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Username))
+                .ForMember(dest => dest.HashedPassword, opt => opt.MapFrom(src => src.Password))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
             CreateMap<TutorProfile, TutorProfileDto>().ReverseMap();
             CreateMap<Order, OrderCreateDto>().ReverseMap();
         }
