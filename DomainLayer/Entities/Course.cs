@@ -17,9 +17,8 @@ namespace DomainLayer.Entities
         public string Thumbnail { get; set; } = string.Empty;
         public string Metadata { get; set; } = string.Empty;
         public float AvgRating { get; set; }
-
+        public Guid Tutorid { get; set; }
         // Navigation Properties
         public User Tutor { get; set; }
     }
-
 }
