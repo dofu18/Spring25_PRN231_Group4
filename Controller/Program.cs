@@ -1,3 +1,4 @@
+using ApplicationLayer.Services.Account;
 using ApplicationLayer.Services.Auth;
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
@@ -73,6 +74,9 @@ builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ITutorProfileRepository, TutorProfileRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
