@@ -51,9 +51,9 @@ namespace Controller.Controllers
         }
 
         [HttpGet("GetUserById/{id}")]
-        public async Task<IActionResult> GetUserById(string id)
+        public async Task<IActionResult> GetUserById(Guid id)
         {
-            var response = await _accountService.GetUserByIdAsync(id);
+            var response = await _accountService.GetUserByIdAsync(id.ToString());
             if (response.IsSucceed)
             {
                 return Ok(response);
@@ -75,9 +75,9 @@ namespace Controller.Controllers
         }
 
         [HttpPut("UpdateUser/{userId}")]
-        public async Task<IActionResult> UpdateUser(string userId, [FromBody] AccountDto user)
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] AccountDto user)
         {
-            var response = await _accountService.UpdateUserAsync(userId, user);
+            var response = await _accountService.UpdateUserAsync(userId.ToString(), user);
             if (response.IsSucceed)
             {
                 return Ok(response);
@@ -86,9 +86,10 @@ namespace Controller.Controllers
             return BadRequest(response);
         }
 
-        public async Task<IActionResult> DeleteUser(string userId)
+        [HttpDelete("DeleteUser/{userId}")]
+        public async Task<IActionResult> DeleteUser(Guid userId)
         {
-            var response = await _accountService.DeleteUserAsync(userId);
+            var response = await _accountService.DeleteUserAsync(userId.ToString());
             if (response.IsSucceed)
             {
                 return Ok(response);
@@ -97,6 +98,7 @@ namespace Controller.Controllers
             return BadRequest(response);
         }
 
+        [HttpPut("UpdatePassword/{email}")]
         public async Task<IActionResult> UpdatePassword(string email, [FromBody] UpdatePasswordDto updatePasswordDto)
         {
             var result = await _accountService.UpdateUserPasswordAsync(email, updatePasswordDto);

@@ -13,9 +13,9 @@ namespace InfrastructureLayer.Repository.IRepository
     {
         Task<User> GetByEmailAsync(string email);
         Task<User> GetById(string id);
-
+        Task<IEnumerable<User>> GetAllAsync();
         Task<ResponseDto> CreateStaffAsync(User user, string password);
         Task<ResponseDto> CreateAdminAsync(User user, string password);
-        Task<ResponseDto> DeleteUserAsync(string userId, UserStatusEnum status);
+        Task<ResponseDto> DeleteUserAsync(Guid userId, UserStatusEnum status);
     }
 }
