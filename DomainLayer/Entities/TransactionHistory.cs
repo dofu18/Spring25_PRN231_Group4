@@ -10,6 +10,8 @@ namespace DomainLayer.Entities
     {
         public float Amount { get; set; }
         public string Message { get; set; } = string.Empty;
+        public Guid CreatedBy { get; set; }
+
 
         // Navigation Property
         public User User { get; set; }

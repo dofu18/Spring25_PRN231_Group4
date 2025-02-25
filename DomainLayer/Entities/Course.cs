@@ -12,6 +12,7 @@ namespace DomainLayer.Entities
         public string Description { get; set; } = string.Empty;
         public float Price { get; set; }
         public int Discount { get; set; }
+        public int SlotQuantity { get; set; }
         public string Status { get; set; } = string.Empty;
         public string CourseDetail { get; set; } = string.Empty;
         public string Thumbnail { get; set; } = string.Empty;
