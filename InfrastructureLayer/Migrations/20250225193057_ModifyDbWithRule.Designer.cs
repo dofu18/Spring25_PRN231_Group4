@@ -3,6 +3,7 @@ using System;
 using InfrastructureLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InfrastructureLayer.Migrations
 {
     [DbContext(typeof(TutoringKidDbContext))]
-    partial class TutoringKidDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250225193057_ModifyDbWithRule")]
+    partial class ModifyDbWithRule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BoughtCourses", (string)null);
+                    b.ToTable("BoughtCourses");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Category", b =>
@@ -94,7 +97,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Course", b =>
@@ -160,7 +163,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("Tutorid");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.CourseCategory", b =>
@@ -187,7 +190,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseCategories", (string)null);
+                    b.ToTable("CourseCategories");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Lessons", b =>
@@ -225,7 +228,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Lessons", (string)null);
+                    b.ToTable("Lessons");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Order", b =>
@@ -261,7 +264,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.OrderCourse", b =>
@@ -296,7 +299,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderCourses", (string)null);
+                    b.ToTable("OrderCourses");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Review", b =>
@@ -343,7 +346,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Schedule", b =>
@@ -407,7 +410,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Schedules", (string)null);
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.ScheduleLessons", b =>
@@ -437,7 +440,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("ScheduleLessons", (string)null);
+                    b.ToTable("ScheduleLessons");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.TransactionHistory", b =>
@@ -469,7 +472,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.TutorProfile", b =>
@@ -515,7 +518,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TutorProfiles", (string)null);
+                    b.ToTable("TutorProfiles");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.User", b =>
@@ -616,7 +619,7 @@ namespace InfrastructureLayer.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.BoughtCourse", b =>

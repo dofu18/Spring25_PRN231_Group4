@@ -110,14 +110,12 @@ namespace InfrastructureLayer
                 e.Property(x => x.DayOfWeek).IsRequired().HasMaxLength(7);
                 e.Property(x => x.StartTime).IsRequired().HasDefaultValueSql("CURRENT_TIME AT TIME ZONE 'UTC'");
                 e.Property(x => x.EndTime).IsRequired().HasDefaultValueSql("CURRENT_TIME AT TIME ZONE 'UTC'");
-                e.Property(x => x.Room).IsRequired(false).HasMaxLength(200);
                 e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
                 e.Property(x => x.StartDate).IsRequired().HasDefaultValueSql("CURRENT_DATE AT TIME ZONE 'UTC'");
                 e.Property(x => x.EndDate).IsRequired().HasDefaultValueSql("CURRENT_DATE AT TIME ZONE 'UTC'");
                 e.Property(x => x.Status).IsRequired().HasDefaultValue(ScheduleStatusEnum.InActive);
                 e.HasOne(x => x.Student).WithMany().HasForeignKey(x => x.StudentId).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.SlotQuantity).IsRequired();
-                e.HasOne(x => x.CreatedByUser).WithMany().HasForeignKey(x => x.CreatedBy).OnDelete(DeleteBehavior.Cascade);
+                e.Property(x => x.SlotIndex).IsRequired();
                 e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
             });
@@ -157,6 +155,23 @@ namespace InfrastructureLayer
                 e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
                 e.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
             });
+            builder.Entity<Lessons>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
+                e.Property(x => x.Title).IsRequired().HasMaxLength(200);
+                e.Property(x => x.Content).IsRequired(false).HasMaxLength(500);
+                e.Property(x => x.OrderIndex).IsRequired();
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+                e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+            });
+            builder.Entity<ScheduleLessons>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.HasOne(x => x.Schedule).WithMany().HasForeignKey(x => x.ScheduleId).OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(x => x.Lessons).WithMany().HasForeignKey(x => x.LessonsId).OnDelete(DeleteBehavior.Cascade);
+                e.Property(x => x.SlotIndex).IsRequired();
+            });
             builder.Entity<Course>(e =>
             {
                 e.HasKey(x => x.Id);
@@ -166,6 +181,7 @@ namespace InfrastructureLayer
                 e.Property(x => x.Discount).IsRequired().HasDefaultValue(0);
                 e.Property(x => x.Status).IsRequired().HasDefaultValue(CourseStatusEnum.Draft);
                 e.Property(x => x.CourseDetail).IsRequired(false).HasMaxLength(500);
+                e.Property(x => x.SlotQuantity).IsRequired();
                 e.Property(x => x.Thumbnail).IsRequired(false).HasMaxLength(1000);
                 e.Property(x => x.Metadata).IsRequired(false).HasMaxLength(1000);
                 e.Property(x => x.AvgRating).IsRequired().HasDefaultValue(0);

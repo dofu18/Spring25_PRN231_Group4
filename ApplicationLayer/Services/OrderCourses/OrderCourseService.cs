@@ -28,11 +28,6 @@ namespace ApplicationLayer.Services.OrderCourses
             //return await _orderCourseRepo.WhereAsync(up =>
             //        (up.CreatedBy == userId));
 
-            if (userId.HasValue)
-            {
-                return await _orderCourseRepo.WhereAsync(oc => oc.CreatedBy == userId, "Course", "Order");
-            }
-
             return await _orderCourseRepo.ListAsync("Course", "Order");
         }
     }
