@@ -16,18 +16,20 @@ namespace InfrastructureLayer
             _configuration = configuration;
         }
 
-        //public static string GetConnectionString(string connectionStringName)
-        //{
-        //    var config = new ConfigurationBuilder()
-        //        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-        //        .AddJsonFile("appsettings.json")
-        //        .Build();
 
-        //    string connectionString = config.GetConnectionString(connectionStringName);
-        //    return connectionString;
-        //}
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder.UseNpgsql(GetConnectionString("DefaultConnection"));
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                string connectionString = config.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseNpgsql(connectionString);
+            }
+        }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -214,14 +216,6 @@ namespace InfrastructureLayer
 
             string connectionString = config.GetConnectionString(connectionStringName);
             return connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql(GetConnectionString("DefaultConnection"));
-            }
         }
     }
 }
