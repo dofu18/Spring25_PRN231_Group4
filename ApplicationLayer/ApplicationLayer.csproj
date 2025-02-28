@@ -18,10 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\VNPay\" />
-    <Folder Include="VNPayUtil\" />
     <Folder Include="RespType\" />
-    <Folder Include="Services\VNPay\" />
   </ItemGroup>
 
 </Project>

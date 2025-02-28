@@ -2,6 +2,7 @@ using ApplicationLayer.Services.Account;
 using ApplicationLayer.Services.Auth;
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
+using ApplicationLayer.Services.VNPay;
 using DomainLayer.Helper;
 using InfrastructureLayer;
 using InfrastructureLayer.Repository;
@@ -61,7 +62,10 @@ builder.Services.AddCors(options =>
 });
 
 // Get Connection String from appsettings.json
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//Vnpay
+builder.Services.AddSingleton<IVNPayService, VNPayService>();
 
 
 // Add AutoMapper
