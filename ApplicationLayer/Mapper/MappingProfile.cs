@@ -1,4 +1,7 @@
-﻿using ApplicationLayer.DTOs.Account;
+﻿using ApplicationLayer.DTOs.Category;
+using ApplicationLayer.DTOs.Course;
+using ApplicationLayer.DTOs.CourseCategory;
+using ApplicationLayer.DTOs.Account;
 using ApplicationLayer.DTOs.Auth;
 using ApplicationLayer.DTOs.Orders;
 using ApplicationLayer.DTOs.TutorProfile;
@@ -27,6 +30,9 @@ namespace DomainLayer.Mapper
                 .ForMember(dest => dest.status, opt => opt.MapFrom(src => src.Status));
             CreateMap<TutorProfile, TutorProfileDto>().ReverseMap();
             CreateMap<Order, OrderCreateDto>().ReverseMap();
+            CreateMap<Course, CourseCreateDto>().ReverseMap();
+            CreateMap<Category, CategoryCreateDto>().ReverseMap();
+            CreateMap<CourseCategory, CourseCategoryCreateDto>().ReverseMap();
         }
     }
 }
