@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using InfrastructureLayer;
 using InfrastructureLayer.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using static DomainLayer.Enums.GeneralEnum;
 
 namespace ApplicationLayer.Services.Orders
@@ -33,7 +35,6 @@ namespace ApplicationLayer.Services.Orders
             order.CreatedBy = new Guid("11111111-1111-1111-1111-111111111111");
             order.CreatedAt = DateTime.Now;
             order.UpdatedAt = DateTime.Now;
-            order.UpdatedBy = new Guid("11111111-1111-1111-1111-111111111111");
             await _orderRepo.CreateAsync(order);
 
             return SuccessResp.Created("Order created successfully");
