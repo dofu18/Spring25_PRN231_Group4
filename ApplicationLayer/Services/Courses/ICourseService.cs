@@ -11,10 +11,10 @@ namespace ApplicationLayer.Services.Courses
 {
     public interface ICourseService
     {
-        Task<IEnumerable<Course>> GetAllCoursesAsync();
-        Task UpdateCourseAsync(Course course);
-        Task DeleteCourseAsync(Guid id);
-        Task CreateCourseAsync(Course course);
-        Task<Course> GetCourseByIdAsync(Guid id);
+        Task<DynamicResponse<CourseResponseModel>> GetAllCoursesAsync(GetAllCourseDto model);
+        Task<GenericResp<CourseResponseModel>> UpdateCourseAsync(CourseCreateDto model, Guid id);
+        Task<GenericResp<CourseResponseModel>> DeleteCourseAsync(Guid id, bool status);
+        Task<GenericResp<CourseResponseModel>> GetCourseByIdAsync( Guid id);
+        Task<GenericResp<CourseResponseModel>> CreateCourseAsync(CourseCreateDto model);
     }
 }

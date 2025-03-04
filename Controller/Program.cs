@@ -1,5 +1,9 @@
+
+using ApplicationLayer.Services.Courses;
+=======
 using ApplicationLayer.Services.Account;
 using ApplicationLayer.Services.Auth;
+
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
 using ApplicationLayer.Services.VNPay;
@@ -83,7 +87,11 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
+
+builder.Services.AddScoped<ICourseService, CourseService>();
+=======
 builder.Services.AddScoped<IVnpay, Vnpay>();
+
 
 var app = builder.Build();
 
