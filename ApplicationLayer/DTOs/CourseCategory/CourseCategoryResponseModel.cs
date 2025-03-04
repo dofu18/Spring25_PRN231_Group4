@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.DTOs.CourseCategory
 {
-    public class CourseCategoryCreateDto
+    public class CourseCategoryResponseModel
     {
         public Guid CourseId { get; set; }
         public Guid CategoryId { get; set; }
-        public bool Status { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using ApplicationLayer.Services.Categories;
+﻿using ApplicationLayer.DTOs.Category;
+using ApplicationLayer.Services.Categories;
 using DomainLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controller.Controllers
@@ -16,45 +18,73 @@ namespace Controller.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(GetAllCategoryRequestModel model)
         {
-            return Ok(await _categoryService.GetAllCategoriesAsync());
+            try
+            {
+                var result = await _categoryService.GetAllCategoriesAsync(model);
+                return StatusCode(result.Code, result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var category = await _categoryService.GetCategoryByIdAsync(id);
-            if (category == null)
+            try
             {
-                return NotFound();
+                var result = await _categoryService.GetCategoryByIdAsync(id);
+                return StatusCode(result.Code, result);
             }
-            return Ok(category);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Category category)
+        public async Task<IActionResult> Create([FromBody] CategoryCreateDto model)
         {
-            await _categoryService.CreateCategoryAsync(category);
-            return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] Category category)
-        {
-            if (id != category.Id)
+            try
             {
-                return BadRequest();
+                var result = await _categoryService.CreateCategoryAsync(model);
+                return StatusCode(result.Code, result);
             }
-            await _categoryService.UpdateCategoryAsync(category);
-            return NoContent();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromBody] CategoryCreateDto model, Guid id)
         {
-            await _categoryService.DeleteCategoryAsync(id);
-            return NoContent();
+            try
+            {
+                var result = await _categoryService.UpdateCategoryAsync(model, id);
+                return StatusCode(result.Code, result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id, bool status)
+        {
+            try
+            {
+                var result = await _categoryService.DeleteCategoryAsync(id, status);
+                return StatusCode(result.Code, result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 
