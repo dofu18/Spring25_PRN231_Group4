@@ -1,3 +1,4 @@
+using ApplicationLayer.Services.Courses;
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
 using InfrastructureLayer;
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ITutorProfileRepository, TutorProfileRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 var app = builder.Build();
 

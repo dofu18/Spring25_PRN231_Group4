@@ -1,60 +1,92 @@
-﻿using ApplicationLayer.Services.Courses;
+﻿using ApplicationLayer.DTOs.Course;
+using ApplicationLayer.Services.Courses;
 using DomainLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controller.Controllers
 {
     [ApiController]
-    [Route("api/[course]")]
+    [Route("api/course")]
     public class CourseController : ControllerBase
     {
-        private readonly CourseService _courseService;
+        private readonly ICourseService _courseService;
 
         public CourseController(CourseService courseService)
         {
             _courseService = courseService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpPost("Search")]
+        public async Task<IActionResult> GetAllCourses(GetAllCourseDto model)
         {
-            return Ok(await _courseService.GetAllCoursesAsync());
+            try
+            {
+                var result = await _courseService.GetAllCoursesAsync(model);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetCourseById(Guid id)
         {
-            var course = await _courseService.GetCourseByIdAsync(id);
-            if (course == null)
+            try
             {
-                return NotFound();
+                var result = await _courseService.GetCourseByIdAsync(id);
+                return Ok(result);
             }
-            return Ok(course);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Course course)
+        public async Task<IActionResult> CreateCourse(CourseCreateDto model)
         {
-            await _courseService.CreateCourseAsync(course);
-            return CreatedAtAction(nameof(GetById), new { id = course.Id }, course);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] Course course)
-        {
-            if (id != course.Id)
+            try
             {
-                return BadRequest();
+                var result = await _courseService.CreateCourseAsync(model);
+                return Ok(result);
             }
-            await _courseService.UpdateCourseAsync(course);
-            return NoContent();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpGet]
+        public async Task<IActionResult> UpdateCourse([FromBody]CourseCreateDto model, Guid id)
         {
-            await _courseService.DeleteCourseAsync(id);
-            return NoContent();
+            try
+            {
+                var result = await _courseService.UpdateCourseAsync(model, id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCourse(Guid id, bool status)
+        {
+            try
+            {
+                var result = await _courseService.DeleteCourseAsync(id, status);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 
