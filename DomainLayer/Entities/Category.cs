@@ -13,6 +13,7 @@ namespace DomainLayer.Entities
         public string Description { get; set; } = string.Empty;
         public string ImgUrl { get; set; } = string.Empty;
         public bool Active { get; set; }
+        public Guid CreatedBy { get; set; }
 
         // Navigation Properties
         public User CreatedByUser { get; set; }

@@ -18,14 +18,17 @@ namespace DomainLayer.Entities
         public string Description { get; set; } = string.Empty;
         public float Price { get; set; }
         public int Discount { get; set; }
+
         public bool Status { get; set; } 
+
+        public int SlotQuantity { get; set; }
+
         public string CourseDetail { get; set; } = string.Empty;
         public string Thumbnail { get; set; } = string.Empty;
         public string Metadata { get; set; } = string.Empty;
         public float AvgRating { get; set; }
-
+        public Guid Tutorid { get; set; }
         // Navigation Properties
         public User Tutor { get; set; }
     }
-
 }

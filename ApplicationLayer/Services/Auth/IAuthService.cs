@@ -1,5 +1,5 @@
 ﻿using ApplicationLayer.DTOs.Auth;
-using ApplicationLayer.DTOs;
+using DomainLayer.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;

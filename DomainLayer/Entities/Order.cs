@@ -11,6 +11,7 @@ namespace DomainLayer.Entities
         public float TotalAmount { get; set; }
         public string Status { get; set; } = string.Empty;
         public string PaymentMethod { get; set; } = string.Empty;
+        public Guid CreatedBy { get; set; }
 
         // Navigation Property
         public User CreatedUser { get; set; } 

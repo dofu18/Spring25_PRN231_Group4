@@ -16,18 +16,20 @@ namespace InfrastructureLayer
             _configuration = configuration;
         }
 
-        //public static string GetConnectionString(string connectionStringName)
-        //{
-        //    var config = new ConfigurationBuilder()
-        //        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-        //        .AddJsonFile("appsettings.json")
-        //        .Build();
 
-        //    string connectionString = config.GetConnectionString(connectionStringName);
-        //    return connectionString;
-        //}
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder.UseNpgsql(GetConnectionString("DefaultConnection"));
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                string connectionString = config.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseNpgsql(connectionString);
+            }
+        }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -72,16 +74,16 @@ namespace InfrastructureLayer
                 u.Property(x => x.Meta).IsRequired(false).HasMaxLength(1000);
                 u.Property(x => x.Role).IsRequired().HasDefaultValue(UserRoleEnum.Parent);
                 u.Property(x => x.UserName).IsRequired(false).HasMaxLength(35);
-                u.Property(x => x.HashedPassword).IsRequired(false).HasMaxLength(30);
+                u.Property(x => x.HashedPassword).IsRequired(false).HasMaxLength(100);
                 u.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.Cascade);
-                u.Property(x => x.LastLogin).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                u.Property(x => x.LastLogin).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 u.Property(x => x.Status).IsRequired().HasDefaultValue(UserStatusEnum.NotVerified);
-                u.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
-                u.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                u.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+                u.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 u.Property(x => x.Token).IsRequired(false).HasMaxLength(1000);
-                u.Property(x => x.TokenExpires).IsRequired(false).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                u.Property(x => x.TokenExpires).IsRequired(false).HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 u.Property(x => x.RefreshToken).IsRequired(false).HasMaxLength(1000);
-                u.Property(x => x.RefreshTokenExpires).IsRequired(false).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                u.Property(x => x.RefreshTokenExpires).IsRequired(false).HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
 
 
 
@@ -93,8 +95,8 @@ namespace InfrastructureLayer
                 e.Property(x => x.Content).IsRequired().HasMaxLength(500);
                 e.Property(x => x.Status).IsRequired().HasDefaultValue(TutorProfileEnum.Draft);
                 e.Property(x => x.Meta).IsRequired(false).HasMaxLength(1000);
-                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
-                e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+                e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
             });
             builder.Entity<TransactionHistory>(e =>
             {
@@ -102,24 +104,22 @@ namespace InfrastructureLayer
                 e.Property(x => x.Amount).IsRequired();
                 e.Property(x => x.Message).IsRequired().HasMaxLength(1000);
                 e.HasOne(x => x.User).WithMany().HasForeignKey(x => x.CreatedBy).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
             });
             builder.Entity<Schedule>(e =>
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.DayOfWeek).IsRequired().HasMaxLength(7);
-                e.Property(x => x.StartTime).IsRequired().HasDefaultValueSql("CURRENT_TIME");
-                e.Property(x => x.EndTime).IsRequired().HasDefaultValueSql("CURRENT_TIME");
-                e.Property(x => x.Room).IsRequired(false).HasMaxLength(200);
+                e.Property(x => x.StartTime).IsRequired().HasDefaultValueSql("CURRENT_TIME AT TIME ZONE 'UTC'");
+                e.Property(x => x.EndTime).IsRequired().HasDefaultValueSql("CURRENT_TIME AT TIME ZONE 'UTC'");
                 e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.StartDate).IsRequired().HasDefaultValueSql("CURRENT_DATE");
-                e.Property(x => x.EndDate).IsRequired().HasDefaultValueSql("CURRENT_DATE");
+                e.Property(x => x.StartDate).IsRequired().HasDefaultValueSql("CURRENT_DATE AT TIME ZONE 'UTC'");
+                e.Property(x => x.EndDate).IsRequired().HasDefaultValueSql("CURRENT_DATE AT TIME ZONE 'UTC'");
                 e.Property(x => x.Status).IsRequired().HasDefaultValue(ScheduleStatusEnum.InActive);
                 e.HasOne(x => x.Student).WithMany().HasForeignKey(x => x.StudentId).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.SlotQuantity).IsRequired();
-                e.HasOne(x => x.CreatedByUser).WithMany().HasForeignKey(x => x.CreatedBy).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
-                e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                e.Property(x => x.SlotIndex).IsRequired();
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+                e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
             });
             builder.Entity<Review>(e =>
             {
@@ -130,7 +130,7 @@ namespace InfrastructureLayer
                 e.Property(x => x.Rating).IsRequired();
                 e.Property(x => x.Active).IsRequired().HasDefaultValue(false);
                 e.HasOne(x => x.CreatedByUser).WithMany().HasForeignKey(x => x.CreatedBy).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
 
             });
             builder.Entity<OrderCourse>(e =>
@@ -148,7 +148,7 @@ namespace InfrastructureLayer
                 e.Property(x => x.Status).IsRequired().HasDefaultValue(OrderEnum.Pending);
                 e.Property(x => x.PaymentMethod).IsRequired(false);
                 e.HasOne(x => x.CreatedUser).WithMany().HasForeignKey(x => x.CreatedBy).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
 
             });
             builder.Entity<CourseCategory>(e =>
@@ -156,6 +156,23 @@ namespace InfrastructureLayer
                 e.HasKey(x => x.Id);
                 e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
                 e.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
+            });
+            builder.Entity<Lessons>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
+                e.Property(x => x.Title).IsRequired().HasMaxLength(200);
+                e.Property(x => x.Content).IsRequired(false).HasMaxLength(500);
+                e.Property(x => x.OrderIndex).IsRequired();
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+                e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
+            });
+            builder.Entity<ScheduleLessons>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.HasOne(x => x.Schedule).WithMany().HasForeignKey(x => x.ScheduleId).OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(x => x.Lessons).WithMany().HasForeignKey(x => x.LessonsId).OnDelete(DeleteBehavior.Cascade);
+                e.Property(x => x.SlotIndex).IsRequired();
             });
             builder.Entity<Course>(e =>
             {
@@ -166,6 +183,7 @@ namespace InfrastructureLayer
                 e.Property(x => x.Discount).IsRequired().HasDefaultValue(0);
                 e.Property(x => x.Status).IsRequired().HasDefaultValue(CourseStatusEnum.Draft);
                 e.Property(x => x.CourseDetail).IsRequired(false).HasMaxLength(500);
+                e.Property(x => x.SlotQuantity).IsRequired();
                 e.Property(x => x.Thumbnail).IsRequired(false).HasMaxLength(1000);
                 e.Property(x => x.Metadata).IsRequired(false).HasMaxLength(1000);
                 e.Property(x => x.AvgRating).IsRequired().HasDefaultValue(0);
@@ -178,7 +196,7 @@ namespace InfrastructureLayer
                 e.Property(x => x.ImgUrl).IsRequired(false).HasMaxLength(1000);
                 e.Property(x => x.Active).IsRequired().HasDefaultValue(false);
                 e.HasOne(x => x.CreatedByUser).WithMany().HasForeignKey(x => x.CreatedBy).OnDelete(DeleteBehavior.Cascade);
-                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
+                e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
             });
             builder.Entity<BoughtCourse>(e =>
             {
@@ -198,14 +216,6 @@ namespace InfrastructureLayer
 
             string connectionString = config.GetConnectionString(connectionStringName);
             return connectionString;
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql(GetConnectionString("DefaultConnection"));
-            }
         }
     }
 }
