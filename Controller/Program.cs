@@ -1,5 +1,8 @@
+
+using ApplicationLayer.Services.Courses;
 using ApplicationLayer.Services.Account;
 using ApplicationLayer.Services.Auth;
+
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
 using ApplicationLayer.Services.VNPay;
@@ -11,6 +14,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VNPAY.NET;
+using ApplicationLayer.Services.Categories;
+using ApplicationLayer.Services.CourseCategories;
 
 var builder = WebApplication.CreateBuilder(args);
 var CORS = "AllowAllOrigins";
@@ -83,7 +88,12 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
+
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICourseCategoryService, CourseCategoryService>();
 builder.Services.AddScoped<IVnpay, Vnpay>();
+
 
 var app = builder.Build();
 

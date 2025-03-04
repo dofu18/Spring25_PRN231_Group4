@@ -1,60 +1,82 @@
-﻿using ApplicationLayer.Services.CourseCategories;
+﻿using ApplicationLayer.DTOs.CourseCategory;
+using ApplicationLayer.Services.CourseCategories;
 using DomainLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controller.Controllers
 {
     [ApiController]
-    [Route("api/[courseCategory]")]
+    [Route("api/courseCategory")]
     public class CourseCategoryController : ControllerBase
     {
-        private readonly CourseCategoryService _courseCategoryService;
+        private readonly ICourseCategoryService _courseCategoryService;
 
-        public CourseCategoryController(CourseCategoryService courseCategoryService)
+        public CourseCategoryController(ICourseCategoryService courseCategoryService)
         {
             _courseCategoryService = courseCategoryService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(GetAllCategoryCourseRequestModel model)
         {
-            return Ok(await _courseCategoryService.GetAllCourseCategoriesAsync());
+            return Ok(await _courseCategoryService.GetAllCourseCategoriesAsync(model));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var courseCategory = await _courseCategoryService.GetCourseCategoryByIdAsync(id);
-            if (courseCategory == null)
+            try
             {
-                return NotFound();
+                var result = await _courseCategoryService.GetCourseCategoryByIdAsync(id);
+                return StatusCode(result.Code, result);
             }
-            return Ok(courseCategory);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CourseCategory courseCategory)
+        public async Task<IActionResult> Create([FromBody] CourseCategoryCreateDto model)
         {
-            await _courseCategoryService.CreateCourseCategoryAsync(courseCategory);
-            return CreatedAtAction(nameof(GetById), new { id = courseCategory.Id }, courseCategory);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] CourseCategory courseCategory)
-        {
-            if (id != courseCategory.Id)
+            try
             {
-                return BadRequest();
+                var result = await _courseCategoryService.CreateCourseCategoryAsync(model);
+                return StatusCode(result.Code, result);
             }
-            await _courseCategoryService.UpdateCourseCategoryAsync(courseCategory);
-            return NoContent();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] CourseCategoryCreateDto model)
         {
-            await _courseCategoryService.DeleteCourseCategoryAsync(id);
-            return NoContent();
+            try
+            {
+                var result = await _courseCategoryService.UpdateCourseCategoryAsync(model, id);
+                return StatusCode(result.Code, result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [Authorize(Roles = "Admin, Manager")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id, bool status)
+        {
+            try
+            {
+                var result = await _courseCategoryService.DeleteCourseCategoryAsync(id, status);
+                return StatusCode(result.Code, result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 

@@ -30,9 +30,24 @@ namespace DomainLayer.Mapper
                 .ForMember(dest => dest.status, opt => opt.MapFrom(src => src.Status));
             CreateMap<TutorProfile, TutorProfileDto>().ReverseMap();
             CreateMap<Order, OrderCreateDto>().ReverseMap();
-            CreateMap<Course, CourseCreateDto>().ReverseMap();
-            CreateMap<Category, CategoryCreateDto>().ReverseMap();
-            CreateMap<CourseCategory, CourseCategoryCreateDto>().ReverseMap();
+
+            //Course
+            CreateMap<CourseCreateDto, Course>().ReverseMap();
+            CreateMap<CourseCreateDto, CourseResponseModel>().ReverseMap();
+            CreateMap<CourseCreateDto, Course>().ReverseMap();
+            CreateMap<CourseResponseModel, Course>().ReverseMap();
+
+            //Category
+            CreateMap<CategoryCreateDto, Category>().ReverseMap();
+            CreateMap<CategoryCreateDto, CategoryResponseModel>().ReverseMap();
+            CreateMap<CategoryCreateDto, Category>().ReverseMap();
+            CreateMap<CategoryResponseModel, Category>().ReverseMap();
+
+            //CourseCategory
+            CreateMap<CourseCategoryCreateDto, CourseCategory>().ReverseMap();
+            CreateMap<CourseCategoryCreateDto, CourseCategoryResponseModel>().ReverseMap();
+            CreateMap<CourseCategoryCreateDto, CourseCategory>().ReverseMap();
+            CreateMap<CourseCategoryResponseModel, CourseCategory>().ReverseMap();
         }
     }
 }

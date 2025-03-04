@@ -1,4 +1,7 @@
-﻿using DomainLayer.Entities;
+﻿using Application.RespType;
+using ApplicationLayer.DTOs.Course;
+using ApplicationLayer.DTOs.CourseCategory;
+using DomainLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +12,10 @@ namespace ApplicationLayer.Services.CourseCategories
 {
     public interface ICourseCategoryService
     {
-        Task<IEnumerable<CourseCategory>> GetAllCourseCategoriesAsync();
-        Task<CourseCategory> GetCourseCategoryByIdAsync(Guid id);
-        Task CreateCourseCategoryAsync(CourseCategory courseCategory);
-        Task UpdateCourseCategoryAsync(CourseCategory courseCategory);
-        Task DeleteCourseCategoryAsync(Guid id);
+        Task<DynamicResponse<CourseCategoryResponseModel>> GetAllCourseCategoriesAsync(GetAllCategoryCourseRequestModel model);
+        Task<GenericResp<CourseCategoryResponseModel>> UpdateCourseCategoryAsync(CourseCategoryCreateDto model, Guid id);
+        Task<GenericResp<CourseCategoryResponseModel>> DeleteCourseCategoryAsync(Guid id, bool status);
+        Task<GenericResp<CourseCategoryResponseModel>> GetCourseCategoryByIdAsync(Guid id);
+        Task<GenericResp<CourseCategoryResponseModel>> CreateCourseCategoryAsync(CourseCategoryCreateDto model);
     }
 }
