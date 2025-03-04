@@ -1,5 +1,6 @@
 ﻿using Application.RespType;
 using ApplicationLayer.DTOs.Course;
+using ApplicationLayer.DTOs.CourseCategory;
 using AutoMapper;
 using DomainLayer.Entities;
 using InfrastructureLayer.Repository.IRepository;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace ApplicationLayer.Services.Courses
 {
@@ -80,9 +82,69 @@ namespace ApplicationLayer.Services.Courses
             }
         }
 
-        public Task<DynamicResponse<CourseResponseModel>> GetAllCoursesAsync(GetAllCourseDto model)
+        public async Task<DynamicResponse<CourseResponseModel>> GetAllCoursesAsync(GetAllCourseDto model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var listCourse = await _courseRepository.ListAsync();
+                if (!string.IsNullOrEmpty(model.keyWord))
+                {
+                    List<Course> listCourseByName = listCourse.Where(a => a.Name.ToLower().Contains(model.keyWord)).ToList();
+
+                    List<Course> listCourseByDiscription = listCourse.Where(a => a.Description.ToLower().Contains(model.keyWord)).ToList();
+
+                    listCourse = listCourseByName
+                        .Concat(listCourseByDiscription)
+                        .GroupBy(b => b.Id)
+                        .Select(g => g.First())
+                        .ToList();
+                }
+                if (model.Status != null)
+                {
+                    listCourse = listCourse.Where(c => c.Status == model.Status).ToList();
+                }
+                var result = _mapper.Map<List<CourseResponseModel>>(listCourse);
+
+                var pageCourse = result
+                    .OrderBy(c => c.Id)
+                    .ToPagedList(model.pageNum, model.pageSize);
+                return new DynamicResponse<CourseResponseModel>()
+                {
+                    Code = 200,
+                    Message = null,
+
+                    Data = new MegaData<CourseResponseModel>()
+                    {
+                        PageInfo = new PagingMetaData()
+                        {
+                            Page = pageCourse.PageNumber,
+                            Size = pageCourse.PageSize,
+                            Sort = "Ascending",
+                            Order = "Id",
+                            TotalPage = pageCourse.PageCount,
+                            TotalItem = pageCourse.TotalItemCount,
+                        },
+                        SearchInfo = new SearchCondition()
+                        {
+                            keyWord = model.keyWord,
+                            role = null,
+                            status = model.Status,
+                            is_Verify = null,
+                            is_Delete = null
+                        },
+                        PageData = pageCourse.ToList()
+                    },
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DynamicResponse<CourseResponseModel>()
+                {
+                    Code = 500,
+                    Message = "Server Error!",
+                    Data = null
+                };
+            }
         }
 
         public async Task<GenericResp<CourseResponseModel>> GetCourseByIdAsync(Guid id)

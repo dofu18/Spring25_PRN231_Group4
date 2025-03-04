@@ -1,4 +1,7 @@
-﻿using DomainLayer.Entities;
+﻿using Application.RespType;
+using ApplicationLayer.DTOs.Category;
+using ApplicationLayer.DTOs.Course;
+using DomainLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +12,10 @@ namespace ApplicationLayer.Services.Categories
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetAllCategoriesAsync();
-        Task<Category> GetCategoryByIdAsync(Guid id);
-        Task CreateCategoryAsync(Category category);
-        Task UpdateCategoryAsync(Category category);
-        Task DeleteCategoryAsync(Guid id);
+        Task<DynamicResponse<CategoryResponseModel>> GetAllCategoriesAsync(GetAllCategoryRequestModel model);
+        Task<GenericResp<CategoryResponseModel>> UpdateCategoryAsync(CategoryCreateDto model, Guid id);
+        Task<GenericResp<CategoryResponseModel>> DeleteCategoryAsync(Guid id, bool status);
+        Task<GenericResp<CategoryResponseModel>> GetCategoryByIdAsync(Guid id);
+        Task<GenericResp<CategoryResponseModel>> CreateCategoryAsync(CategoryCreateDto model);
     }
 }
