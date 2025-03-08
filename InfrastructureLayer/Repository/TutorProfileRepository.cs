@@ -17,11 +17,5 @@ namespace InfrastructureLayer.Repository
         {
             _tutoringKidDbContext = tutoringKidDbContext;
         }
-        public async Task<TutorProfile?> GetById(Guid id)
-        {
-            return await _tutoringKidDbContext.TutorProfiles
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.UserId == id);
-        }
     }
 }

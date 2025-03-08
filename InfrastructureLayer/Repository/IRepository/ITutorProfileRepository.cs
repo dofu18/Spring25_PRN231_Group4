@@ -9,6 +9,5 @@ namespace InfrastructureLayer.Repository.IRepository
 {
     public interface ITutorProfileRepository : IGenericRepository<TutorProfile>
     {
-        Task<TutorProfile> GetById(Guid id);
     }
 }

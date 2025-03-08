@@ -8,8 +8,9 @@ namespace ApplicationLayer.DTOs.TutorProfile
 {
     public class CreateTutorProfileDto
     {
-        public string Fullname { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public Guid UserId { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public string Meta { get; set; } = string.Empty;
     }
 }

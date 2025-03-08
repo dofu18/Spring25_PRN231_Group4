@@ -11,6 +11,7 @@ namespace ApplicationLayer.DTOs.TutorProfile
         public Guid UserId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public string status { get; set; }
         public string Meta { get; set; }
     }
 }
