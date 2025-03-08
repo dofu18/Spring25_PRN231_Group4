@@ -2,6 +2,7 @@ using ApplicationLayer.Services.Account;
 using ApplicationLayer.Services.Auth;
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
+using ApplicationLayer.Services.VNPay;
 using ApplicationLayer.Services.TutorProfiles;
 using DomainLayer.Helper;
 using InfrastructureLayer;
@@ -10,6 +11,7 @@ using InfrastructureLayer.Repository.IRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using VNPAY.NET;
 
 var builder = WebApplication.CreateBuilder(args);
 var CORS = "AllowAllOrigins";
@@ -61,18 +63,19 @@ builder.Services.AddCors(options =>
 });
 
 // Get Connection String from appsettings.json
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Add DbContext with PostgreSQL
-builder.Services.AddDbContext<TutoringKidDbContext>(options =>
-    options.UseNpgsql(connectionString));
+//Vnpay
+builder.Services.AddSingleton<IVNPayService, VNPayService>();
+
 
 // Add AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Register Services
+builder.Services.AddConfigService(builder.Configuration);
 builder.Services.AddSingleton<JwtHelper>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+//builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ITutorProfileRepository, TutorProfileRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -82,6 +85,7 @@ builder.Services.AddScoped<ITutorProfileService, TutorProfileService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
+builder.Services.AddScoped<IVnpay, Vnpay>();
 
 var app = builder.Build();
 

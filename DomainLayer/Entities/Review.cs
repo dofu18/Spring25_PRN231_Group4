@@ -13,6 +13,7 @@ namespace DomainLayer.Entities
         public string Content { get; set; } = string.Empty;
         public float Rating { get; set; }
         public bool Active { get; set; }
+        public Guid CreatedBy { get; set; }
 
         // Navigation Properties
         public Course Course { get; set; }
