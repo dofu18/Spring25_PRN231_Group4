@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="RespType\" />
+    <Folder Include="Services\Lesson\" />
   </ItemGroup>
 
 </Project>
