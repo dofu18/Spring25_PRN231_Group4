@@ -8,8 +8,8 @@ namespace ApplicationLayer.DTOs.TutorProfile
 {
     public class UpdateTutorProfileDto
     {
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Meta { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public string Meta { get; set; } = string.Empty;
     }
 }

@@ -16,6 +16,7 @@ namespace DomainLayer.Mapper
     {
         public MappingProfile()
         {
+            //Account Mapping
             CreateMap<RegisterDto, User>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Username))
                 .ForMember(dest => dest.HashedPassword, opt => opt.MapFrom(src => src.Password))
@@ -25,7 +26,18 @@ namespace DomainLayer.Mapper
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.HashedPassword, opt => opt.Ignore())
                 .ForMember(dest => dest.status, opt => opt.MapFrom(src => src.Status));
-            CreateMap<TutorProfile, TutorProfileDto>().ReverseMap();
+
+            // TutorProfile Mapping
+            CreateMap<TutorProfile, TutorProfileDto>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
+                .ForMember(dest => dest.status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Meta, opt => opt.MapFrom(src => src.Meta));
+
+            CreateMap<CreateTutorProfileDto, TutorProfile>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
+            CreateMap<UpdateTutorProfileDto, TutorProfile>();
             CreateMap<Order, OrderCreateDto>().ReverseMap();
         }
     }

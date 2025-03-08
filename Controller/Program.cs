@@ -3,6 +3,7 @@ using ApplicationLayer.Services.Auth;
 using ApplicationLayer.Services.OrderCourses;
 using ApplicationLayer.Services.Orders;
 using ApplicationLayer.Services.VNPay;
+using ApplicationLayer.Services.TutorProfiles;
 using DomainLayer.Helper;
 using InfrastructureLayer;
 using InfrastructureLayer.Repository;
@@ -80,6 +81,7 @@ builder.Services.AddScoped<ITutorProfileRepository, TutorProfileRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ITutorProfileService, TutorProfileService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
