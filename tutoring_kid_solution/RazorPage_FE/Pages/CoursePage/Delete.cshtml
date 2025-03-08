@@ -1,0 +1,32 @@
+﻿@page "{id:guid}"
+@model RazorPage_FE.Pages.CoursePage.DeletePage
+@{
+    ViewData["Title"] = "Delete Course";
+}
+
+<h2>Delete Course</h2>
+
+<p class="text-danger">Are you sure you want to deactivate this course?</p>
+
+@if (Model.Course != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Name: @Model.Course.Name</h5>
+            <p class="card-text">Description: @Model.Course.Description</p>
+            <p class="card-text">Status: @(Model.Course.Status.ToString() == "True" ? "Active" : "Inactive")</p>
+
+
+            <form method="post">
+                <input type="hidden" asp-for="Course.Id" />
+                <button type="submit" class="btn btn-danger">Deactivate</button>
+                <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-danger">Course not found!</p>
+}
+

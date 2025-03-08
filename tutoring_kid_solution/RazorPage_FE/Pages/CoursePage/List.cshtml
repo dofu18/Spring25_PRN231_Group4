@@ -1,0 +1,68 @@
+﻿@page
+@model RazorPage_FE.Pages.CoursePage.ListModel
+@{
+    ViewData["Title"] = "Course List";
+}
+
+<h2>Course List</h2>
+
+<form method="get">
+    <input type="text" asp-for="SearchKeyword" placeholder="Search..." />
+    <select asp-for="Status">
+        <option value="">All</option>
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+
+@if (Model.Courses != null && Model.Courses.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Slot Quantity</th>
+                <th>Avg Rating</th>
+                <th>Tutor</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model.Courses)
+            {
+                <tr>
+                    <td>@course.Name</td>
+                    <td>@course.Description</td>
+                    <td>@course.Price</td>
+                    <td>@course.Discount%</td>
+                    <td>@course.AvgRating</td>
+                    <td>
+                        <a asp-page="EditCourse" asp-route-id="@course.Id" class="btn btn-primary">Edit</a>
+                        <a asp-page="DeleteCourse" asp-route-id="@course.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div>
+        Page @Model.PageInfo.Page of @Model.PageInfo.TotalPage
+        @if (Model.PageInfo.Page > 1)
+        {
+            <a asp-page="Course" asp-route-pageNum="@(Model.PageInfo.Page - 1)" asp-route-pageSize="@Model.PageInfo.Size">Previous</a>
+        }
+        @if (Model.PageInfo.Page < Model.PageInfo.TotalPage)
+        {
+            <a asp-page="Course" asp-route-pageNum="@(Model.PageInfo.Page + 1)" asp-route-pageSize="@Model.PageInfo.Size">Next</a>
+        }
+    </div>
+}
+else
+{
+    <p>No courses found.</p>
+}

@@ -1,0 +1,26 @@
+﻿@page "{id:guid}"
+@model RazorPage_FE.Pages.CoursePage.DetailsModel
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<h2>Course Details</h2>
+
+@if (Model.Course != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Name: @Model.Course.Name</h5>
+            <p class="card-text">Description: @Model.Course.Description</p>
+            <p class="card-text">Price: @Model.Course.Price</p>
+            <p class="card-text">Discount: @Model.Course.Discount%</p>
+            <p class="card-text">Status: @(Model.Course.Status.ToString() == "True" ? "Active" : "Inactive")</p>
+            <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-danger">Course not found!</p>
+}
+

@@ -28,6 +28,7 @@ namespace ApplicationLayer.Services.Courses
             try
             {
                 var course = _mapper.Map<Course>(model);
+                course.Id = Guid.NewGuid();
                 course.Status = true;
                 await _courseRepository.CreateAsync(course);
                 return new GenericResp<CourseResponseModel>()
