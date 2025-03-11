@@ -24,7 +24,6 @@ namespace ApplicationLayer.Services.CourseCategories
             try
             {
                 var courseCate = _mapper.Map<CourseCategory>(model);
-                courseCate.Status = "1";
                 await _courseCategoryRepository.CreateAsync(courseCate);
                 return new GenericResp<CourseCategoryResponseModel>()
                 {
@@ -44,7 +43,7 @@ namespace ApplicationLayer.Services.CourseCategories
             }
         }
 
-        public async Task<GenericResp<CourseCategoryResponseModel>> DeleteCourseCategoryAsync(Guid id, string status)
+        public async Task<GenericResp<CourseCategoryResponseModel>> DeleteCourseCategoryAsync(Guid id)
         {
             try
             {
@@ -58,7 +57,6 @@ namespace ApplicationLayer.Services.CourseCategories
                         Data = null
                     };
                 }
-                courseCate.Status ="1";
                 await _courseCategoryRepository.UpdateAsync(courseCate);
                 return new GenericResp<CourseCategoryResponseModel>()
                 {
@@ -95,10 +93,7 @@ namespace ApplicationLayer.Services.CourseCategories
                         .Select(g => g.First())
                         .ToList();
                 }
-                if (model.Status != null)
-                {
-                    listCourseCate = listCourseCate.Where(c => c.Status == model.Status).ToList();
-                }
+                
                 var result = _mapper.Map<List<CourseCategoryResponseModel>>(listCourseCate);
 
                 var pageCourseCate = result
@@ -124,7 +119,6 @@ namespace ApplicationLayer.Services.CourseCategories
                         {
                             keyWord = model.keyWord,
                             role = null,
-                            status = model.Status,
                             is_Verify = null,
                             is_Delete = null
                         },

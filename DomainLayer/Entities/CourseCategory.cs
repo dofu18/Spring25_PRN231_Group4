@@ -10,7 +10,6 @@ namespace DomainLayer.Entities
     {
         public Guid CourseId { get; set; }
         public Guid CategoryId { get; set; }
-        public string Status { get; set; }
 
         // Navigation Properties
         public Course Course { get; set; }

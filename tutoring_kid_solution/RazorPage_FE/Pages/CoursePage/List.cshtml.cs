@@ -22,7 +22,7 @@ namespace RazorPage_FE.Pages.CoursePage
         public string? SearchKeyword { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public bool? Status { get; set; }
+        public string? Status { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int PageNum { get; set; } = 1;

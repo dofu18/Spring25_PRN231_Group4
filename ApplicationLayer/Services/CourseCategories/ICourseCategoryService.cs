@@ -14,7 +14,7 @@ namespace ApplicationLayer.Services.CourseCategories
     {
         Task<DynamicResponse<CourseCategoryResponseModel>> GetAllCourseCategoriesAsync(GetAllCategoryCourseRequestModel model);
         Task<GenericResp<CourseCategoryResponseModel>> UpdateCourseCategoryAsync(CourseCategoryCreateDto model, Guid id);
-        Task<GenericResp<CourseCategoryResponseModel>> DeleteCourseCategoryAsync(Guid id, string status);
+        Task<GenericResp<CourseCategoryResponseModel>> DeleteCourseCategoryAsync(Guid id);
         Task<GenericResp<CourseCategoryResponseModel>> GetCourseCategoryByIdAsync(Guid id);
         Task<GenericResp<CourseCategoryResponseModel>> CreateCourseCategoryAsync(CourseCategoryCreateDto model);
     }
