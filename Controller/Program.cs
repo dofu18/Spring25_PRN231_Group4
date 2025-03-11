@@ -12,8 +12,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VNPAY.NET;
-using ApplicationLayer.Services.CourseCategories;
-using ApplicationLayer.Services.Categories;
 using ApplicationLayer.Services.Lesson;
 
 var builder = WebApplication.CreateBuilder(args);

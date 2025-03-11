@@ -1,7 +1,5 @@
 ﻿using ApplicationLayer.DTOs.Account;
 using ApplicationLayer.DTOs.Auth;
-using ApplicationLayer.DTOs.Category;
-using ApplicationLayer.DTOs.CourseCategory;
 using ApplicationLayer.DTOs.Lesson;
 using ApplicationLayer.DTOs.Orders;
 using ApplicationLayer.DTOs.TutorProfile;
