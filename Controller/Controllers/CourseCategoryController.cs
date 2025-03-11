@@ -66,11 +66,11 @@ namespace Controller.Controllers
         }
         [Authorize(Roles = "Admin, Manager")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id, bool status)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                var result = await _courseCategoryService.DeleteCourseCategoryAsync(id, status);
+                var result = await _courseCategoryService.DeleteCourseCategoryAsync(id);
                 return StatusCode(result.Code, result);
             }
             catch (Exception ex)

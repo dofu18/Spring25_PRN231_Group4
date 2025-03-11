@@ -29,9 +29,9 @@ namespace RazorPage_FE.Pages.CoursePage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsyn(Guid id)
+        public async Task<IActionResult> OnPostAsyn(Guid id, string status)
         {
-            var response = await _courseService.DeleteCourseAsync(id, false); 
+            var response = await _courseService.DeleteCourseAsync(id,status); 
 
             if (response.Code == 404)
             {
