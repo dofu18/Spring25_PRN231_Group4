@@ -19,7 +19,7 @@ namespace Controller.Controllers
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllLessons()
         {
-            var response = await _lessonService.GetAllLessonsAsync();
+            var response = await _lessonService.GetAllLessonsAsync() ;
             return Ok(response);
         }
 
