@@ -1,5 +1,8 @@
 ﻿using ApplicationLayer.DTOs.Account;
 using ApplicationLayer.DTOs.Auth;
+using ApplicationLayer.DTOs.Category;
+using ApplicationLayer.DTOs.CourseCategory;
+using ApplicationLayer.DTOs.Lesson;
 using ApplicationLayer.DTOs.Orders;
 using ApplicationLayer.DTOs.TutorProfile;
 using AutoMapper;
@@ -38,7 +41,32 @@ namespace DomainLayer.Mapper
             CreateMap<CreateTutorProfileDto, TutorProfile>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
             CreateMap<UpdateTutorProfileDto, TutorProfile>();
+
+            // Order Mapping
             CreateMap<Order, OrderCreateDto>().ReverseMap();
+
+            // Lesson Mapping
+            CreateMap<Lessons, LessonDto>()
+                .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.CourseId))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
+                .ForMember(dest => dest.OrderIndex, opt => opt.MapFrom(src => src.OrderIndex));
+            CreateMap<CreateLessonDto, Lessons>().ReverseMap();
+            CreateMap<UpdateLessonDto, Lessons>().ReverseMap();
+
+            // Category Mapping
+            CreateMap<Category, CategoryDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.ImgUrl));
+            CreateMap<CreateCategoryDto, Category>().ReverseMap();
+            CreateMap<UpdateCategoryDto, Category>().ReverseMap();
+
+            // CourseCategory Mapping
+            CreateMap<CourseCategory, CourseCategoryDto>()
+                .ForMember(dest => dest.CourseId, opt => opt.MapFrom(src => src.CourseId))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
+            CreateMap<CreateCourseCategoryDto, CourseCategory>().ReverseMap();
         }
     }
 }

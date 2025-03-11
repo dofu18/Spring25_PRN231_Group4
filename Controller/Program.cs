@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VNPAY.NET;
+using ApplicationLayer.Services.CourseCategories;
+using ApplicationLayer.Services.Categories;
+using ApplicationLayer.Services.Lesson;
 
 var builder = WebApplication.CreateBuilder(args);
 var CORS = "AllowAllOrigins";
@@ -79,12 +82,18 @@ builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ITutorProfileRepository, TutorProfileRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();
+builder.Services.AddScoped<ILessonsRepository, LessonsRepository>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITutorProfileService, TutorProfileService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ILessonsService, LessonsService>();
+builder.Services.AddScoped<ICourseCategoryService, CourseCategoryService>();
 builder.Services.AddScoped<IVnpay, Vnpay>();
 
 var app = builder.Build();
