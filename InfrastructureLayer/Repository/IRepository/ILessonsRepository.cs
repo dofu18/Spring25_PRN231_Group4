@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InfrastructureLayer.Repository.IRepository
 {
-    public interface ITutorProfileRepository : IGenericRepository<TutorProfile>
+    public interface ILessonsRepository : IGenericRepository<Lessons>
     {
     }
 }
