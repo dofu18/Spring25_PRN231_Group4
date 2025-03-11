@@ -4,6 +4,7 @@ using ApplicationLayer.DTOs.CourseCategory;
 using AutoMapper;
 using DomainLayer.Entities;
 using InfrastructureLayer.Repository.IRepository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,11 @@ using X.PagedList;
 
 namespace ApplicationLayer.Services.Courses
 {
-    public class CourseService : ICourseService
+    public class CourseService : BaseService, ICourseService
     {
-        private readonly IMapper _mapper;
         private readonly IGenericRepository<Course> _courseRepository;
-        public CourseService(IMapper mapper, IGenericRepository<Course> courseRepository)
+        public CourseService( IGenericRepository<Course> courseRepository, IMapper mapper, IHttpContextAccessor httpCtx) : base(mapper, httpCtx) 
         {
-            _mapper = mapper;
             _courseRepository = courseRepository;
         }
         public async Task<GenericResp<CourseResponseModel>> CreateCourseAsync(CourseCreateDto model)
@@ -211,6 +210,17 @@ namespace ApplicationLayer.Services.Courses
                     Data = null
                 };
             }
+        }
+
+        public async Task<ICollection<Course>> List(Guid? userId = null)
+        {
+            bool noFiltersApplied = userId == Guid.Empty;
+            if (noFiltersApplied)
+            {
+                return await _courseRepository.ListAsync();
+            }
+            return await _courseRepository.WhereAsync(up =>
+                    (up.Tutorid == userId));
         }
     }
 

@@ -16,5 +16,6 @@ namespace ApplicationLayer.Services.Courses
         Task<GenericResp<CourseResponseModel>> DeleteCourseAsync(Guid id, bool status);
         Task<GenericResp<CourseResponseModel>> GetCourseByIdAsync( Guid id);
         Task<GenericResp<CourseResponseModel>> CreateCourseAsync(CourseCreateDto model);
+        Task<ICollection<Course>> List(Guid? userId = null);
     }
 }
