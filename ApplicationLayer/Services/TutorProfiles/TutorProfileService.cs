@@ -100,7 +100,6 @@ namespace ApplicationLayer.Services.TutorProfiles
                     Message = $"TutorProfile with ID {tutorId} not found"
                 };
             }
-
         }
     }
 }

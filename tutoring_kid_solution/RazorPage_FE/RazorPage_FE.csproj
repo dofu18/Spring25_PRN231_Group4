@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\HomePage\" />
     <Folder Include="wwwroot\lib\animate\" />
     <Folder Include="wwwroot\lib\easing\" />
   </ItemGroup>

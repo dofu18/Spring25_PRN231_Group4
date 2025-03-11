@@ -15,6 +15,7 @@ namespace Controller.Controllers
         {
             _tutorProfileService = tutorProfileService;
         }
+
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllTutorProfile()
         {
