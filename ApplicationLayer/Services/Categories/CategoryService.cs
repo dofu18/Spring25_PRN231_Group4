@@ -30,7 +30,7 @@ namespace ApplicationLayer.Services.Categories
             try
             {
                 var category = _mapper.Map<Category>(model);
-                category.Active = true;
+                category.Active = "1";
                 await _categoryRepository.CreateAsync(category);
                 return new GenericResp<CategoryResponseModel>()
                 {
