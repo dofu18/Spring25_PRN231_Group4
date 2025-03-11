@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InfrastructureLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class data : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,32 +16,29 @@ namespace InfrastructureLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
+                    FirstName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    Phone = table.Column<string>(type: "text", nullable: false),
-                    ProfileUrl = table.Column<string>(type: "text", nullable: false),
+                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
+                    ProfileUrl = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
                     Credits = table.Column<float>(type: "real", nullable: false),
-                    Meta = table.Column<string>(type: "text", nullable: false),
-                    Role = table.Column<string>(type: "text", nullable: false),
-                    UserName = table.Column<string>(type: "text", nullable: false),
-                    HashedPassword = table.Column<string>(type: "text", nullable: false),
+                    Meta = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: false, defaultValue: "Parent"),
+                    UserName = table.Column<string>(type: "character varying(35)", maxLength: 35, nullable: true),
+                    HashedPassword = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     ParentId = table.Column<Guid>(type: "uuid", nullable: true),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    LastLogin = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    Status = table.Column<string>(type: "text", nullable: false, defaultValue: "NotVerified"),
+                    LastLogin = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
+                    Token = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    TokenExpires = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
+                    RefreshToken = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    RefreshTokenExpires = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Users_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -49,22 +46,20 @@ namespace InfrastructureLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    ImgUrl = table.Column<string>(type: "text", nullable: false),
-                    Active = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatedByUserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    ImgUrl = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    Active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Categories_Users_CreatedByUserId",
-                        column: x => x.CreatedByUserId,
+                        name: "FK_Categories_Users_CreatedBy",
+                        column: x => x.CreatedBy,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -75,27 +70,26 @@ namespace InfrastructureLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
-                    Discount = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    CourseDetail = table.Column<string>(type: "text", nullable: false),
-                    Thumbnail = table.Column<string>(type: "text", nullable: false),
-                    Metadata = table.Column<string>(type: "text", nullable: false),
-                    AvgRating = table.Column<float>(type: "real", nullable: false),
-                    TutorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Discount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    Status = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    SlotQuantity = table.Column<int>(type: "integer", nullable: false),
+                    CourseDetail = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Thumbnail = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    Metadata = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    AvgRating = table.Column<float>(type: "real", nullable: false, defaultValue: 0f),
+                    Tutorid = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Users_TutorId",
-                        column: x => x.TutorId,
+                        name: "FK_Courses_Users_Tutorid",
+                        column: x => x.Tutorid,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -107,20 +101,18 @@ namespace InfrastructureLayer.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TotalAmount = table.Column<float>(type: "real", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    PaymentMethod = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<string>(type: "text", nullable: false, defaultValue: "Pending"),
+                    PaymentMethod = table.Column<string>(type: "text", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Orders_Users_CreatedBy",
+                        column: x => x.CreatedBy,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -132,19 +124,17 @@ namespace InfrastructureLayer.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Amount = table.Column<float>(type: "real", nullable: false),
-                    Message = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Message = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Transactions_Users_CreatedBy",
+                        column: x => x.CreatedBy,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -156,14 +146,12 @@ namespace InfrastructureLayer.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    Meta = table.Column<string>(type: "text", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Content = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false, defaultValue: "Draft"),
+                    Meta = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'")
                 },
                 constraints: table =>
                 {
@@ -184,9 +172,7 @@ namespace InfrastructureLayer.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
                     ChildId = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -196,6 +182,12 @@ namespace InfrastructureLayer.Migrations
                         name: "FK_BoughtCourses_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BoughtCourses_Users_ChildId",
+                        column: x => x.ChildId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -213,9 +205,8 @@ namespace InfrastructureLayer.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Status = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -236,18 +227,40 @@ namespace InfrastructureLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Lessons",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Content = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    OrderIndex = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lessons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lessons_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    Content = table.Column<string>(type: "text", nullable: false),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Content = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Rating = table.Column<float>(type: "real", nullable: false),
-                    Active = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Active = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -263,7 +276,8 @@ namespace InfrastructureLayer.Migrations
                         name: "FK_Reviews_Users_CreatedBy",
                         column: x => x.CreatedBy,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -271,20 +285,17 @@ namespace InfrastructureLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    DayOfWeek = table.Column<string>(type: "text", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Room = table.Column<string>(type: "text", nullable: false),
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
                     StudentId = table.Column<Guid>(type: "uuid", nullable: true),
-                    SlotQuantity = table.Column<int>(type: "integer", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    SlotIndex = table.Column<int>(type: "integer", nullable: false),
+                    DayOfWeek = table.Column<string>(type: "character varying(7)", maxLength: 7, nullable: false),
+                    StartTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false, defaultValueSql: "CURRENT_TIME AT TIME ZONE 'UTC'"),
+                    EndTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false, defaultValueSql: "CURRENT_TIME AT TIME ZONE 'UTC'"),
+                    StartDate = table.Column<DateOnly>(type: "date", nullable: false, defaultValueSql: "CURRENT_DATE AT TIME ZONE 'UTC'"),
+                    EndDate = table.Column<DateOnly>(type: "date", nullable: false, defaultValueSql: "CURRENT_DATE AT TIME ZONE 'UTC'"),
+                    Status = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'")
                 },
                 constraints: table =>
                 {
@@ -296,16 +307,11 @@ namespace InfrastructureLayer.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Schedules_Users_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Schedules_Users_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,11 +321,9 @@ namespace InfrastructureLayer.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
                     OrderId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Discount = table.Column<int>(type: "integer", nullable: false),
+                    Discount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
                     Price = table.Column<float>(type: "real", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -339,6 +343,39 @@ namespace InfrastructureLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ScheduleLessons",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ScheduleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    LessonsId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SlotIndex = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduleLessons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ScheduleLessons_Lessons_LessonsId",
+                        column: x => x.LessonsId,
+                        principalTable: "Lessons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ScheduleLessons_Schedules_ScheduleId",
+                        column: x => x.ScheduleId,
+                        principalTable: "Schedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BoughtCourses_ChildId",
+                table: "BoughtCourses",
+                column: "ChildId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_BoughtCourses_CourseId",
                 table: "BoughtCourses",
@@ -350,9 +387,9 @@ namespace InfrastructureLayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_CreatedByUserId",
+                name: "IX_Categories_CreatedBy",
                 table: "Categories",
-                column: "CreatedByUserId");
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseCategories_CategoryId",
@@ -365,9 +402,14 @@ namespace InfrastructureLayer.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_TutorId",
+                name: "IX_Courses_Tutorid",
                 table: "Courses",
-                column: "TutorId");
+                column: "Tutorid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lessons_CourseId",
+                table: "Lessons",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderCourses_CourseId",
@@ -380,9 +422,9 @@ namespace InfrastructureLayer.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
+                name: "IX_Orders_CreatedBy",
                 table: "Orders",
-                column: "UserId");
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_CourseId",
@@ -395,14 +437,19 @@ namespace InfrastructureLayer.Migrations
                 column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ScheduleLessons_LessonsId",
+                table: "ScheduleLessons",
+                column: "LessonsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ScheduleLessons_ScheduleId",
+                table: "ScheduleLessons",
+                column: "ScheduleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Schedules_CourseId",
                 table: "Schedules",
                 column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_CreatedBy",
-                table: "Schedules",
-                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedules_StudentId",
@@ -410,9 +457,9 @@ namespace InfrastructureLayer.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_UserId",
+                name: "IX_Transactions_CreatedBy",
                 table: "Transactions",
-                column: "UserId");
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TutorProfiles_UserId",
@@ -420,9 +467,10 @@ namespace InfrastructureLayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_ParentId",
+                name: "IX_Users_Email",
                 table: "Users",
-                column: "ParentId");
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -441,7 +489,7 @@ namespace InfrastructureLayer.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
+                name: "ScheduleLessons");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
@@ -454,6 +502,12 @@ namespace InfrastructureLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Lessons");
+
+            migrationBuilder.DropTable(
+                name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "Courses");

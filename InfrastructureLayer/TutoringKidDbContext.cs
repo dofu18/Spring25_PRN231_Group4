@@ -75,7 +75,7 @@ namespace InfrastructureLayer
                 u.Property(x => x.Role).IsRequired().HasDefaultValue(UserRoleEnum.Parent);
                 u.Property(x => x.UserName).IsRequired(false).HasMaxLength(35);
                 u.Property(x => x.HashedPassword).IsRequired(false).HasMaxLength(100);
-                u.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.Cascade);
+                /*u.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.Cascade);*/
                 u.Property(x => x.LastLogin).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 u.Property(x => x.Status).IsRequired().HasDefaultValue(UserStatusEnum.NotVerified);
                 u.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
