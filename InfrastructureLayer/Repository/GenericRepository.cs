@@ -142,5 +142,41 @@ namespace InfrastructureLayer.Repository
                 query = query.Include(navigationProperty);
             return query;
         }
+
+        //add\
+
+        public virtual async Task<List<T>> WhereAsync(Expression<Func<T, bool>>? filter = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, int? page = null, int? pageSize = null, params string[] navigationProperties)
+        {
+            IQueryable<T> query = ApplyNavigation(navigationProperties);
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            if (page.HasValue && pageSize.HasValue)
+            {
+                query = query.Skip(page.Value * pageSize.Value).Take(pageSize.Value);
+            }
+
+            return await query.AsNoTracking().ToListAsync();
+        }
+
+        public virtual async Task<int> CountAsync(Expression<Func<T, bool>>? filter = null)
+        {
+            IQueryable<T> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            return await query.CountAsync();
+        }
     }
 }

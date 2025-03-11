@@ -72,12 +72,12 @@ namespace InfrastructureLayer
                 u.Property(x => x.ProfileUrl).IsRequired(false).HasMaxLength(1000);
                 u.Property(x => x.Credits).IsRequired();
                 u.Property(x => x.Meta).IsRequired(false).HasMaxLength(1000);
-                u.Property(x => x.Role).IsRequired().HasDefaultValue(UserRoleEnum.Parent);
+                u.Property(x => x.Role).IsRequired().HasDefaultValue(UserRoleEnum.Parent).HasConversion<string>();
                 u.Property(x => x.UserName).IsRequired(false).HasMaxLength(35);
                 u.Property(x => x.HashedPassword).IsRequired(false).HasMaxLength(100);
                 u.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.Cascade);
                 u.Property(x => x.LastLogin).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
-                u.Property(x => x.Status).IsRequired().HasDefaultValue(UserStatusEnum.NotVerified);
+                u.Property(x => x.Status).IsRequired().HasDefaultValue(UserStatusEnum.NotVerified).HasConversion<string>();
                 u.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 u.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 u.Property(x => x.Token).IsRequired(false).HasMaxLength(1000);
@@ -93,7 +93,7 @@ namespace InfrastructureLayer
                 e.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
                 e.Property(x => x.Title).IsRequired().HasMaxLength(100);
                 e.Property(x => x.Content).IsRequired().HasMaxLength(500);
-                e.Property(x => x.Status).IsRequired().HasDefaultValue(TutorProfileEnum.Draft);
+                e.Property(x => x.Status).IsRequired().HasDefaultValue(TutorProfileEnum.Draft).HasConversion<string>();
                 e.Property(x => x.Meta).IsRequired(false).HasMaxLength(1000);
                 e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
                 e.Property(x => x.UpdatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
@@ -115,7 +115,7 @@ namespace InfrastructureLayer
                 e.HasOne(x => x.Course).WithMany().HasForeignKey(x => x.CourseId).OnDelete(DeleteBehavior.Cascade);
                 e.Property(x => x.StartDate).IsRequired().HasDefaultValueSql("CURRENT_DATE AT TIME ZONE 'UTC'");
                 e.Property(x => x.EndDate).IsRequired().HasDefaultValueSql("CURRENT_DATE AT TIME ZONE 'UTC'");
-                e.Property(x => x.Status).IsRequired().HasDefaultValue(ScheduleStatusEnum.InActive);
+                e.Property(x => x.Status).IsRequired().HasDefaultValue(ScheduleStatusEnum.InActive).HasConversion<string>();
                 e.HasOne(x => x.Student).WithMany().HasForeignKey(x => x.StudentId).OnDelete(DeleteBehavior.Cascade);
                 e.Property(x => x.SlotIndex).IsRequired();
                 e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
@@ -145,7 +145,7 @@ namespace InfrastructureLayer
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.TotalAmount).IsRequired();
-                e.Property(x => x.Status).IsRequired().HasDefaultValue(OrderEnum.Pending);
+                e.Property(x => x.Status).IsRequired().HasDefaultValue(OrderEnum.Pending).HasConversion<string>();
                 e.Property(x => x.PaymentMethod).IsRequired(false);
                 e.HasOne(x => x.CreatedUser).WithMany().HasForeignKey(x => x.CreatedBy).OnDelete(DeleteBehavior.Cascade);
                 e.Property(x => x.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP AT TIME ZONE 'UTC'");
@@ -181,7 +181,7 @@ namespace InfrastructureLayer
                 e.Property(x => x.Description).IsRequired().HasMaxLength(300);
                 e.Property(x => x.Price).IsRequired();
                 e.Property(x => x.Discount).IsRequired().HasDefaultValue(0);
-                e.Property(x => x.Status).IsRequired().HasDefaultValue(CourseStatusEnum.Draft);
+                e.Property(x => x.Status).IsRequired().HasDefaultValue(CourseStatusEnum.Draft).HasConversion<string>();
                 e.Property(x => x.CourseDetail).IsRequired(false).HasMaxLength(500);
                 e.Property(x => x.SlotQuantity).IsRequired();
                 e.Property(x => x.Thumbnail).IsRequired(false).HasMaxLength(1000);

@@ -13,9 +13,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using VNPAY.NET;
 using ApplicationLayer.Services.Lesson;
+using ApplicationLayer.Services.Courses;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 var CORS = "AllowAllOrigins";
+var configuration = builder.Configuration;
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -32,8 +39,9 @@ builder.Services.AddSwaggerGen(option =>
         Name = "Authorization",
         Description = "Enter the Bearer Authorization string as following: Bearer Generated-JWT-Token",
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
     });
     option.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -49,6 +57,21 @@ builder.Services.AddSwaggerGen(option =>
        }
     });
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["Jwt:Secret"])),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            NameClaimType = JwtRegisteredClaimNames.NameId,
+            RoleClaimType = ClaimTypes.Role
+        };
+    });
+
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -89,6 +112,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderCourseService, OrderCourseService>();
 builder.Services.AddScoped<ILessonsService, LessonsService>();
 builder.Services.AddScoped<IVnpay, Vnpay>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 var app = builder.Build();
 
@@ -105,6 +129,7 @@ app.UseSwaggerUI(c =>
 });
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

@@ -32,6 +32,7 @@ namespace DomainLayer.Helper
                 Subject = new ClaimsIdentity(new[]
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
                 // Add more claims as needed

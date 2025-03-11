@@ -6,11 +6,14 @@
 .vs/
 
 # Settings files
-appsettings.Development.json
 appsettings.json
+appsettings.*.json
 
 # User-specific files
 *.user
 
 # Environment files
 *.env
+/Controller/appsettings.json
+/Controller/appsettings.json
+/Controller/appsettings.Development.json
