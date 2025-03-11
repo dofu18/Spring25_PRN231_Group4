@@ -24,6 +24,6 @@ namespace DomainLayer.Entities
         public DateTime? RefreshTokenExpires { get; set; }
 
         // Navigation Properties
-        public virtual User? Parent { get; set; }
+        /*public virtual User? Parent { get; set; }*/
     }
 }
