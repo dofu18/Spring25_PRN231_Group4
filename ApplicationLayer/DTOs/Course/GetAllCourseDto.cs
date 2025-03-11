@@ -11,6 +11,6 @@ namespace ApplicationLayer.DTOs.Course
         public int pageNum { get; set; } = 1;
         public int pageSize { get; set; } = 1;
         public string? keyWord { get; set; }
-        public bool? Status { get; set; }
+        public string? Status { get; set; }
     }
 }

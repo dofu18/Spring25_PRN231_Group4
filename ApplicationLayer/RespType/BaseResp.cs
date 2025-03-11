@@ -45,7 +45,7 @@ public class SearchCondition
 {
     public string? keyWord { get; set; }
     public string? role { get; set; }
-    public bool? status { get; set; }
+    public string? status { get; set; }
     public bool? is_Verify { get; set; }
     public bool? is_Delete { get; set; }
 }

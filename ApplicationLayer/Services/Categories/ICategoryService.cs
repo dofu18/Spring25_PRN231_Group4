@@ -14,7 +14,7 @@ namespace ApplicationLayer.Services.Categories
     {
         Task<DynamicResponse<CategoryResponseModel>> GetAllCategoriesAsync(GetAllCategoryRequestModel model);
         Task<GenericResp<CategoryResponseModel>> UpdateCategoryAsync(CategoryCreateDto model, Guid id);
-        Task<GenericResp<CategoryResponseModel>> DeleteCategoryAsync(Guid id, bool status);
+        Task<GenericResp<CategoryResponseModel>> DeleteCategoryAsync(Guid id, string status);
         Task<GenericResp<CategoryResponseModel>> GetCategoryByIdAsync(Guid id);
         Task<GenericResp<CategoryResponseModel>> CreateCategoryAsync(CategoryCreateDto model);
     }

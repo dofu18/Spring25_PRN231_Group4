@@ -50,7 +50,7 @@ namespace ApplicationLayer.Services.Categories
             }
         }
 
-        public async Task<GenericResp<CategoryResponseModel>> DeleteCategoryAsync(Guid id, bool status)
+        public async Task<GenericResp<CategoryResponseModel>> DeleteCategoryAsync(Guid id, string status)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace ApplicationLayer.Services.Categories
                         Data = null
                     };
                 }
-                category.Active = status;
+                category.Active = "1";
                 await _categoryRepository.UpdateAsync(category);
                 return new GenericResp<CategoryResponseModel>()
                 {

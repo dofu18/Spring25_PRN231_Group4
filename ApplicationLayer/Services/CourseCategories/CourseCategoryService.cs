@@ -24,7 +24,7 @@ namespace ApplicationLayer.Services.CourseCategories
             try
             {
                 var courseCate = _mapper.Map<CourseCategory>(model);
-                courseCate.Status = true;
+                courseCate.Status = "1";
                 await _courseCategoryRepository.CreateAsync(courseCate);
                 return new GenericResp<CourseCategoryResponseModel>()
                 {
@@ -44,7 +44,7 @@ namespace ApplicationLayer.Services.CourseCategories
             }
         }
 
-        public async Task<GenericResp<CourseCategoryResponseModel>> DeleteCourseCategoryAsync(Guid id, bool status)
+        public async Task<GenericResp<CourseCategoryResponseModel>> DeleteCourseCategoryAsync(Guid id, string status)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace ApplicationLayer.Services.CourseCategories
                         Data = null
                     };
                 }
-                courseCate.Status = status;
+                courseCate.Status ="1";
                 await _courseCategoryRepository.UpdateAsync(courseCate);
                 return new GenericResp<CourseCategoryResponseModel>()
                 {

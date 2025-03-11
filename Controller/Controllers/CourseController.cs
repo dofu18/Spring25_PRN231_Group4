@@ -76,7 +76,7 @@ namespace Controller.Controllers
         }
         [Authorize(Roles = "Admin, Manager")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteCourse(Guid id, bool status)
+        public async Task<IActionResult> DeleteCourse(Guid id, string status)
         {
             try
             {

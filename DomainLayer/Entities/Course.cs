@@ -15,7 +15,7 @@ namespace DomainLayer.Entities
         public float Price { get; set; }
         public int Discount { get; set; }
 
-        public bool Status { get; set; } 
+        public string Status { get; set; } 
 
         public int SlotQuantity { get; set; }
 

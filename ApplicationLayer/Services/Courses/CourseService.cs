@@ -28,7 +28,7 @@ namespace ApplicationLayer.Services.Courses
             {
                 var course = _mapper.Map<Course>(model);
                 course.Id = Guid.NewGuid();
-                course.Status = true;
+                course.Status = "1";
                 await _courseRepository.CreateAsync(course);
                 return new GenericResp<CourseResponseModel>()
                 {
@@ -48,7 +48,7 @@ namespace ApplicationLayer.Services.Courses
             }
         }
 
-        public async Task<GenericResp<CourseResponseModel>> DeleteCourseAsync(Guid id, bool status)
+        public async Task<GenericResp<CourseResponseModel>> DeleteCourseAsync(Guid id, string status)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace ApplicationLayer.Services.Courses
                         Data = null
                     };
                 }
-                course.Status = status;
+                course.Status = "1";
                 await _courseRepository.UpdateAsync(course);
                 return new GenericResp<CourseResponseModel>()
                 {
