@@ -1,5 +1,4 @@
-﻿using ApplicationLayer.DTOs.Category;
-using ApplicationLayer.DTOs.Lesson;
+﻿using ApplicationLayer.DTOs.Lesson;
 using AutoMapper;
 using DomainLayer.Entities;
 using DomainLayer.Helper;

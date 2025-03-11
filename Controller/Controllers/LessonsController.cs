@@ -1,5 +1,4 @@
-﻿using ApplicationLayer.DTOs.Category;
-using ApplicationLayer.DTOs.Lesson;
+﻿using ApplicationLayer.DTOs.Lesson;
 using ApplicationLayer.Services.Lesson;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
