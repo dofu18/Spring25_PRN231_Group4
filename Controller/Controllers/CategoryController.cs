@@ -24,7 +24,7 @@ namespace Controller.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetCategoryById(Guid categoryId)
         {
             var response = await _categoryService.GetCategoryByIdAsync(categoryId);

@@ -23,7 +23,7 @@ namespace Controller.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetTutorProfileById(Guid tutorId)
         {
             var response = await _tutorProfileService.GetTutorProfileByIdAsync(tutorId);

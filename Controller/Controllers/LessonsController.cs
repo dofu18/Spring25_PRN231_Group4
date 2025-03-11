@@ -24,7 +24,7 @@ namespace Controller.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetLessonsById(Guid lessonId)
         {
             var response = await _lessonService.GetLessonsByIdAsync(lessonId);
